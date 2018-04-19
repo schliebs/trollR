@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shitword list — shitwordlist • trollR</title>
+<title>Detect if given texts are trolls — predict_troll • trollR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Shitword list — shitwordlist" />
+<meta property="og:title" content="Detect if given texts are trolls — predict_troll" />
 
-<meta property="og:description" content="A list of Enlish curse words scraped from https://www.noswearing.com/dictionary" />
+<meta property="og:description" content="Detect if given texts are trolls" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,32 +111,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Shitword list</h1>
+    <h1>Detect if given texts are trolls</h1>
     
-    <div class="hidden name"><code>shitwordlist.Rd</code></div>
+    <div class="hidden name"><code>predict_troll.Rd</code></div>
     </div>
 
     
-    <p>A list of Enlish curse words scraped from https://www.noswearing.com/dictionary</p>
+    <p>Detect if given texts are trolls</p>
     
 
-    <pre class="usage"><span class='no'>shitwordlist</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>predict_troll</span>(<span class='no'>x</span>, <span class='kw'>model_</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mdl_data_</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>a vector of text</p></td>
+    </tr>
+    <tr>
+      <th>model_</th>
+      <td><p>a model that is passed to predict, defaults to the <code>model</code>
+supplied with this package</p></td>
+    </tr>
+    <tr>
+      <th>mdl_data_</th>
+      <td><p>a model as returned by <code><a href='build_features.html'>build_features</a></code> (the mdl)
+containing the vectorizer, tfidf, and the lsa objects. Defaults to the
+<code>mdl_data</code> from this package.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector containing 349 words.</p><dl class='dl-horizontal'>
-  <dt>test</dt><dd><p>this is only for illustration purpose how to document data</p></dd>
-  <dt>london</dt><dd><p>hello whatup</p></dd>
-</dl>
+    <p>a vector with the same lengths as x that holds the predicted probabilities
+that the given text is trolling</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>text</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"You suck, die!"</span>, <span class='st'>"What a nice world we have today"</span>, <span class='st'>"I like you"</span>, <span class='st'>"I hate you"</span>)
+(<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='fu'>predict_troll</span>(<span class='no'>text</span>))</div><div class='output co'>#&gt; [1] 0.99461335 0.06459010 0.01856389 0.19459596</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
