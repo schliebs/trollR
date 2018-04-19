@@ -1,18 +1,19 @@
 library(trollR)
-
-# train <- read_csv("raw-data/train.csv")
-
-mdl_data <- build_features(train$comment_text, term_count_min = 3)
-usethis::use_data(mdl_data, overwrite = T)
-# save(mdl_truth, file = "mdl_truth_data.rda")
-# mdl_truth
-
-# REBUILD PACKAGE NOW!
-
-y <- train %>% select(-id, -comment_text) %>% rowSums() %>% {. > 0} * 1
-
 library(xgboost)
 
+train <- read_csv("../train.csv")
+y <- train %>% select(-id, -comment_text) %>% rowSums() %>% {. > 0} * 1
+
+# 1. Build the Features
+mdl_data <- build_features(train$comment_text, term_count_min = 3)
+usethis::use_data(mdl_data, overwrite = T)
+
+# Load or Train the Model (xgbost)
+
+# directly load the model
+# model <- xgb.load("inst/xgboost_model.buffer")
+
+# train the model
 p <- list(objective = "binary:logistic",
           booster = "gbtree",
           eval_metric = "auc",
@@ -23,19 +24,17 @@ p <- list(objective = "binary:logistic",
           subsample = 0.7,
           colsample_bytree = 0.7)
 
-toy <- xgboost(mdl_data$model_matrix, y,
+model <- xgboost(mdl_data$model_matrix, y,
                params = p,
                print_every_n = 20, nrounds = 1000,
                early_stopping_rounds = 100)
 
-y_pred <- 1*(predict(toy, mdl_data$model_matrix) > 0.35)
+xgb.save(model, "inst/xgboost_model.buffer")
+
+# Evaluate the Performance of the Model
+y_pred <- 1 * (predict(model, mdl_data$model_matrix) > 0.35)
 caret::confusionMatrix(factor(y_pred), factor(y))
 
-xgb.save(toy, "inst/xgboost_model.buffer")
+
 
 # REBUILD PACKAGE NOW!
-
-
-# cv <- xgb.cv(mdl_data$model_matrix, label = y, params = p, print_every_n = 20, nrounds = 1000,
-#              early_stopping_rounds = 100, nfold = 8)
-
