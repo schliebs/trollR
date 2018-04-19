@@ -1,0 +1,32 @@
+navbar:
+  title: trollR
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Get Started
+    href: articles/trollR.html
+    menu:
+    - text: Test
+      href: articles/trollR.html
+    - text: Test2
+      href: articles/vignette2.html
+  - text: Reference
+    href: reference/index.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/schliebs/trollR
+
+reference:
+- title: All functions
+  desc: ~
+  contents:
+  - '`test_function`'
+- title: Data
+  desc: ~
+  contents:
+  - '`shitwordlist`'
+
+

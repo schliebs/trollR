@@ -1,0 +1,179 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+#  eval = FALSE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+library(trollR)
+library(xgboost)
+theme_set(theme_light())
+```
+
+# trollR - Online Troll Detection using R
+
+LSE Hackathon Challenge: Detecting Online Trolling Behaviour 
+
+Data source: https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/
+
+Data description
+
+A large number of Wikipedia comments which have been labeled by human raters for toxic behavior. The types of toxicity are:
+
+- toxic
+- severe_toxic
+- obscene
+- threat
+- insult
+- identity_hate
+
+# Usage
+
+To install the package use
+```{r, eval=F}
+# install.packages("devtools")
+devtools::install_github("schliebs/trollR",
+                         auth_token = "6957b42653250daa253173f2b5e0f8e384a8f961")
+library(trollR)
+library(xgboost)
+```
+```{r}
+predict_troll("Hello World - this is an example of trollR - Identifying trolling comments using R")
+
+# take some text
+text <- c(
+  "I would like to point out that your comment was substandard!",
+  "YOU SHOULD DIE!!!!",
+  "YOU SHOULD DIE",
+  "you should die!!!!",
+  "you should die",
+  "Go rot in hell",
+  "I can also write something non-toxic -- really",
+  "COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK",
+  "bloody hell, i forgot my purse at the pub yesterday"
+)
+
+# and find how likely it is to be trolling?
+data_frame(text = text, troll = predict_troll(text)) %>% arrange(-troll)
+```
+
+
+## Thats all?
+
+ Of course not 
+```{r, eval=F}
+run_api()
+```
+![](https://puu.sh/A6q4N/d0661c33be.png)
+
+Or from a terminal
+```{bash, eval=F}
+curl "http://localhost:8000/trollR?text=You suck you cocksucker"
+```
+`{"text":["You suck you cocksucker"],"troll_certainty":[0.9746]}`
+
+But wait, there is more
+```{r, eval=F}
+run_shiny()
+```
+![](https://puu.sh/A6r1b/169e66db24.png)
+
+
+
+# Understanding the model
+
+```{r plot1}
+# load the model
+model <- xgb.load(system.file("xgboost_model.buffer", package = "trollR"))
+df <- xgb.importance(mdl_data$model_matrix %>% colnames(), model) %>% as_data_frame()
+
+vars <- c("length", "ncap", "ncap_len", "nsen", "nexcl", "nquest", "npunct", 
+          "nword", "nsymb", "nsmile", "nslur")
+df %>% 
+  arrange(-Gain) %>% 
+  top_n(20, Gain) %>% 
+  mutate(Feature = reorder(Feature, Gain),
+         Vartype = Feature %in% vars) %>% 
+  ggplot(aes(x = Feature, y = Gain, fill = Vartype)) + 
+  geom_col() +
+  coord_flip() +
+  labs(y = "Feature Importance in the XGBoost Model", x = "", title = "") +
+  theme(axis.text.y = element_text(size = 15, face = "bold")) +
+  scale_fill_brewer(palette = "Set1", guide = F)
+```
+
+
+# Data Examples
+
+The training dataset `train`
+
+```{r}
+library(trollR)
+train <- read_csv("raw-data/train.csv")
+train %>% glimpse()
+```
+
+## toxic
+```{r}
+train %>% filter(toxic == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## severe_toxic
+```{r}
+train %>% filter(severe_toxic == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## obscene
+```{r}
+train %>% filter(obscene == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## threat
+```{r}
+train %>% filter(threat == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## insult
+```{r}
+train %>% filter(insult == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## identity_hate
+```{r}
+train %>% filter(identity_hate == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## Non-Toxic Content
+```{r}
+train %>% 
+  filter(
+    toxic == 0,
+    severe_toxic == 0,
+    obscene == 0,
+    threat == 0, 
+    insult == 0,
+    identity_hate == 0
+  ) %>%
+  select(comment_text) %>% top_n(3) %>% pull()
+```
+
+## Overview of sample
+```{r plot2}
+theme_set(theme_light())
+train %>% 
+  mutate(n_insults = toxic + severe_toxic + obscene + threat + insult + identity_hate) %>% 
+  group_by(n_insults) %>% 
+  tally() %>% 
+  ggplot(aes(x = n_insults, y = n)) + 
+  geom_col() +
+  geom_label(aes(label = n)) +
+  labs(x = "Number of Insults per Comment", y = "Count")
+```
+
