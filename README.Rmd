@@ -39,8 +39,7 @@ A large number of Wikipedia comments which have been labeled by human raters for
 To install the package use
 ```{r, eval=F}
 # install.packages("devtools")
-devtools::install_github("schliebs/trollR",
-                         auth_token = "6957b42653250daa253173f2b5e0f8e384a8f961")
+devtools::install_github("schliebs/trollR")
 library(trollR)
 library(xgboost)
 ```

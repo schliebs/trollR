@@ -25,8 +25,7 @@ To install the package use
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("schliebs/trollR",
-                         auth_token = "6957b42653250daa253173f2b5e0f8e384a8f961")
+devtools::install_github("schliebs/trollR")
 library(trollR)
 library(xgboost)
 ```
