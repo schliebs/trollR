@@ -85,8 +85,6 @@ run_shiny()
 ```
 ![](https://puu.sh/A6r1b/169e66db24.png)
 
-
-
 # Understanding the model
 
 ```{r plot1}
@@ -108,72 +106,3 @@ df %>%
   theme(axis.text.y = element_text(size = 15, face = "bold")) +
   scale_fill_brewer(palette = "Set1", guide = F)
 ```
-
-
-# Data Examples
-
-The training dataset `train`
-
-```{r}
-library(trollR)
-train <- read_csv("raw-data/train.csv")
-train %>% glimpse()
-```
-
-## toxic
-```{r}
-train %>% filter(toxic == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## severe_toxic
-```{r}
-train %>% filter(severe_toxic == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## obscene
-```{r}
-train %>% filter(obscene == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## threat
-```{r}
-train %>% filter(threat == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## insult
-```{r}
-train %>% filter(insult == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## identity_hate
-```{r}
-train %>% filter(identity_hate == 1) %>% select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## Non-Toxic Content
-```{r}
-train %>% 
-  filter(
-    toxic == 0,
-    severe_toxic == 0,
-    obscene == 0,
-    threat == 0, 
-    insult == 0,
-    identity_hate == 0
-  ) %>%
-  select(comment_text) %>% top_n(3) %>% pull()
-```
-
-## Overview of sample
-```{r plot2}
-theme_set(theme_light())
-train %>% 
-  mutate(n_insults = toxic + severe_toxic + obscene + threat + insult + identity_hate) %>% 
-  group_by(n_insults) %>% 
-  tally() %>% 
-  ggplot(aes(x = n_insults, y = n)) + 
-  geom_col() +
-  geom_label(aes(label = n)) +
-  labs(x = "Number of Insults per Comment", y = "Count")
-```
-
