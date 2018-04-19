@@ -2,13 +2,14 @@ Package: trollR
 Title: Detecting if a post is trolling, one post at a time
 Version: 0.0.1
 Date: 2018-04-18
-Authors@R:c(person( "Marcel", "Schliebs", role = c("aut"), email = "m.schliebs(at)zeppelin-university.net"),
-             person("David", "Zimmermann", role = c("aut"),
-             person("Ben", "Thies", role = "aut"),
-             person("Divakar", "Kumar", role = "aut"),
-             person("Preet", "Parikh", role = "aut"),
-             person("Mengxi","Wang",role = "aut"))
-Maintainer: Gruppe 3 <email@zu.de>
+Authors@R: c(
+   person( "Marcel", "Schliebs", ,role = c("aut","cre"), email = "m.schliebs@zeppelin-university.net"), 
+   person("David", "Zimmermann", role = "aut"),
+   person("Ben", "Thies", role = "aut"),
+   person("Divakar", "Kumar", role = "aut"),
+   person("Preet", "Parikh", role = "aut"),
+   person("Mengxi", "Wang", role = "aut")
+   )
 Description: What the package does (one paragraph).
 Depends: 
     R (>= 3.4.3),
