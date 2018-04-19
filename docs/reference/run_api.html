@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shitword list — shitwordlist • trollR</title>
+<title>Run the Plumber API — run_api • trollR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Shitword list — shitwordlist" />
+<meta property="og:title" content="Run the Plumber API — run_api" />
 
-<meta property="og:description" content="A list of Enlish curse words scraped from https://www.noswearing.com/dictionary" />
+<meta property="og:description" content="Run the Plumber API" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,32 +111,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Shitword list</h1>
+    <h1>Run the Plumber API</h1>
     
-    <div class="hidden name"><code>shitwordlist.Rd</code></div>
+    <div class="hidden name"><code>run_api.Rd</code></div>
     </div>
 
     
-    <p>A list of Enlish curse words scraped from https://www.noswearing.com/dictionary</p>
+    <p>Run the Plumber API</p>
     
 
-    <pre class="usage"><span class='no'>shitwordlist</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>run_api</span>(<span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>8000</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>parameters passed to <code><a href='http://www.rdocumentation.org/packages/plumber/topics/plumber'>plumber</a></code></p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector containing 349 words.</p><dl class='dl-horizontal'>
-  <dt>test</dt><dd><p>this is only for illustration purpose how to document data</p></dd>
-  <dt>london</dt><dd><p>hello whatup</p></dd>
-</dl>
+    <p>invisible NULL</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+  <span class='fu'>run_api</span>()
+  <span class='co'># try to got to: http://127.0.0.1:8000/trollR</span>
+  <span class='co'># or use http://127.0.0.1:8000/trollR?text=This may be a troll comment</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

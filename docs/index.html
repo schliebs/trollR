@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What the Package Does (one line, title case) • trollR</title>
+<title>Detecting if a post is trolling, one post at a time • trollR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="What the Package Does (one line, title case)">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Detecting if a post is trolling, one post at a time">
 <meta property="og:description" content="What the package does (one paragraph).">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">trollR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.1</span>
       </span>
     </div>
 
@@ -90,9 +90,9 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#trollr---online-troll-detection-using-r" class="anchor"></a>trollR - Online Troll Detection using R</h1></div>
 <p>LSE Hackathon Challenge: Detecting Online Trolling Behaviour</p>
-<p><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data" class="uri">https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data</a></p>
+<p>Data source: <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/" class="uri">https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/</a></p>
 <p>Data description</p>
-<p>You are provided with a large number of Wikipedia comments which have been labeled by human raters for toxic behavior. The types of toxicity are:</p>
+<p>A large number of Wikipedia comments which have been labeled by human raters for toxic behavior. The types of toxicity are:</p>
 <ul>
 <li>toxic</li>
 <li>severe_toxic</li>
@@ -101,13 +101,6 @@
 <li>insult</li>
 <li>identity_hate</li>
 </ul>
-<p>You must create a model which predicts a probability of each type of toxicity for each comment.</p>
-<p>File descriptions:</p>
-<ul>
-<li>train.csv - the training set, contains comments with their binary labels</li>
-<li>test.csv - the test set, you must predict the toxicity probabilities for these comments. To deter hand labeling, the test set contains some comments which are not included in scoring.</li>
-<li>sample_submission.csv - a sample submission file in the correct format</li>
-</ul>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
@@ -115,112 +108,77 @@
 <p>To install the package use</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"schliebs/trollR"</span>,
-                         <span class="dt">auth_token =</span> <span class="st">"6957b42653250daa253173f2b5e0f8e384a8f961"</span>)</code></pre></div>
+                         <span class="dt">auth_token =</span> <span class="st">"6957b42653250daa253173f2b5e0f8e384a8f961"</span>)
+<span class="kw">library</span>(trollR)
+<span class="kw">library</span>(xgboost)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/predict_troll.html">predict_troll</a></span>(<span class="st">"Hello World - this is an example of trollR - Identifying trolling comments using R"</span>)
+<span class="co">#&gt; [1] 1</span>
+
+<span class="co"># take some text</span>
+text &lt;-<span class="st"> </span><span class="kw">c</span>(
+  <span class="st">"I would like to point out that your comment was substandard!"</span>,
+  <span class="st">"YOU SHOULD DIE!!!!"</span>,
+  <span class="st">"YOU SHOULD DIE"</span>,
+  <span class="st">"you should die!!!!"</span>,
+  <span class="st">"you should die"</span>,
+  <span class="st">"Go rot in hell"</span>,
+  <span class="st">"I can also write something non-toxic -- really"</span>,
+  <span class="st">"COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK"</span>,
+  <span class="st">"bloody hell, i forgot my purse at the pub yesterday"</span>
+)
+
+<span class="co"># and find how likely it is to be trolling?</span>
+<span class="kw">data_frame</span>(<span class="dt">text =</span> text, <span class="dt">troll =</span> <span class="kw"><a href="reference/predict_troll.html">predict_troll</a></span>(text)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>troll)
+<span class="co">#&gt; # A tibble: 9 x 2</span>
+<span class="co">#&gt;   text                                                           troll</span>
+<span class="co">#&gt;   &lt;chr&gt;                                                          &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK                 0.997  </span>
+<span class="co">#&gt; 2 bloody hell, i forgot my purse at the pub yesterday          0.975  </span>
+<span class="co">#&gt; 3 YOU SHOULD DIE                                               0.309  </span>
+<span class="co">#&gt; 4 YOU SHOULD DIE!!!!                                           0.222  </span>
+<span class="co">#&gt; 5 Go rot in hell                                               0.139  </span>
+<span class="co">#&gt; 6 you should die                                               0.136  </span>
+<span class="co">#&gt; 7 you should die!!!!                                           0.111  </span>
+<span class="co">#&gt; 8 I would like to point out that your comment was substandard! 0.0220 </span>
+<span class="co">#&gt; 9 I can also write something non-toxic -- really               0.00418</span></code></pre></div>
+<div id="thats-all" class="section level2">
+<h2 class="hasAnchor">
+<a href="#thats-all" class="anchor"></a>Thats all?</h2>
+<p>Of course not</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/run_api.html">run_api</a></span>()</code></pre></div>
+<div class="figure">
+<img src="https://puu.sh/A6q4N/d0661c33be.png">
 </div>
-<div id="data-examples" class="section level1">
+<p>Or from a terminal</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">curl</span> <span class="st">"http://localhost:8000/trollR?text=You suck you cocksucker"</span></code></pre></div>
+<p><code>{"text":["You suck you cocksucker"],"troll_certainty":[0.9746]}</code></p>
+<p>But wait, there is more</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/run_shiny.html">run_shiny</a></span>()</code></pre></div>
+<div class="figure">
+<img src="https://puu.sh/A6r1b/169e66db24.png">
+</div>
+</div>
+</div>
+<div id="understanding-the-model" class="section level1">
 <h1 class="hasAnchor">
-<a href="#data-examples" class="anchor"></a>Data Examples</h1>
-<p>The training dataset <code>train</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(trollR)
-<span class="co">#&gt; Lade nötiges Paket: tidyverse</span>
-<span class="co">#&gt; -- Attaching packages ----------------------------------------- tidyverse 1.2.1 --</span>
-<span class="co">#&gt; v ggplot2 2.2.1     v purrr   0.2.4</span>
-<span class="co">#&gt; v tibble  1.4.2     v dplyr   0.7.4</span>
-<span class="co">#&gt; v tidyr   0.8.0     v stringr 1.3.0</span>
-<span class="co">#&gt; v readr   1.1.1     v forcats 0.3.0</span>
-<span class="co">#&gt; -- Conflicts -------------------------------------------- tidyverse_conflicts() --</span>
-<span class="co">#&gt; x dplyr::filter() masks stats::filter()</span>
-<span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span>
-train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()
-<span class="co">#&gt; Observations: 159,571</span>
-<span class="co">#&gt; Variables: 8</span>
-<span class="co">#&gt; $ id            &lt;chr&gt; "0000997932d777bf", "000103f0d9cfb60f", "000113f...</span>
-<span class="co">#&gt; $ comment_text  &lt;chr&gt; "Explanation\nWhy the edits made under my userna...</span>
-<span class="co">#&gt; $ toxic         &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, ...</span>
-<span class="co">#&gt; $ severe_toxic  &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</span>
-<span class="co">#&gt; $ obscene       &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</span>
-<span class="co">#&gt; $ threat        &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</span>
-<span class="co">#&gt; $ insult        &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</span>
-<span class="co">#&gt; $ identity_hate &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...</span></code></pre></div>
-<div id="toxic" class="section level2">
-<h2 class="hasAnchor">
-<a href="#toxic" class="anchor"></a>toxic</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(toxic <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK"                                                                                                                                                                                                                                                                                       </span>
-<span class="co">#&gt; [2] "Hey... what is it..\n@ | talk .\nWhat is it... an exclusive group of some WP TALIBANS...who are good at destroying, self-appointed purist who GANG UP any one who asks them questions abt their ANTI-SOCIAL and DESTRUCTIVE (non)-contribution at WP?\n\nAsk Sityush to clean up his behavior than issue me nonsensical warnings..."</span>
-<span class="co">#&gt; [3] "Bye! \n\nDon't look, come or think of comming back! Tosser."</span></code></pre></div>
-</div>
-<div id="severe_toxic" class="section level2">
-<h2 class="hasAnchor">
-<a href="#severe_toxic" class="anchor"></a>severe_toxic</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(severe_toxic <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK"                                             </span>
-<span class="co">#&gt; [2] "Stupid peace of shit stop deleting my stuff asshole go die and fall in a hole go to hell!"</span>
-<span class="co">#&gt; [3] "you are a stupid fuck \n\nand your mother's cunt stinks"</span></code></pre></div>
-</div>
-<div id="obscene" class="section level2">
-<h2 class="hasAnchor">
-<a href="#obscene" class="anchor"></a>obscene</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(obscene <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </span>
-<span class="co">#&gt; [2] "You are gay or antisemmitian? \n\nArchangel WHite Tiger\n\nMeow! Greetingshhh!\n\nUh, there are two ways, why you do erased my comment about WW2, that holocaust was brutally slaying of Jews and not gays/Gypsys/Slavs/anyone...\n\n1 - If you are anti-semitian, than shave your head bald and go to the skinhead meetings!\n\n2 - If you doubt words of the Bible, that homosexuality is a deadly sin, make a pentagram tatoo on your forehead go to the satanistic masses with your gay pals!\n\n3 - First and last warning, you fucking gay - I won't appreciate if any more nazi shwain would write in my page! I don't wish to talk to you anymore!\n\nBeware of the Dark Side!"</span>
-<span class="co">#&gt; [3] "FUCK YOUR FILTHY MOTHER IN THE ASS, DRY!"</span></code></pre></div>
-</div>
-<div id="threat" class="section level2">
-<h2 class="hasAnchor">
-<a href="#threat" class="anchor"></a>threat</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(threat <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "Hi! I am back again!\nLast warning!\nStop undoing my edits or die!"                                                                          </span>
-<span class="co">#&gt; [2] "I think that your a Fagget get a oife and burn in Hell I hate you 'm sorry we cant have any more sex i'm running out of conndoms"            </span>
-<span class="co">#&gt; [3] "I'm also a sock puppet of this account...SUPRISE!!\n-sincerely,\n            The man that will track you down from the Internet and kill you"</span></code></pre></div>
-</div>
-<div id="insult" class="section level2">
-<h2 class="hasAnchor">
-<a href="#insult" class="anchor"></a>insult</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(insult <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </span>
-<span class="co">#&gt; [2] "You are gay or antisemmitian? \n\nArchangel WHite Tiger\n\nMeow! Greetingshhh!\n\nUh, there are two ways, why you do erased my comment about WW2, that holocaust was brutally slaying of Jews and not gays/Gypsys/Slavs/anyone...\n\n1 - If you are anti-semitian, than shave your head bald and go to the skinhead meetings!\n\n2 - If you doubt words of the Bible, that homosexuality is a deadly sin, make a pentagram tatoo on your forehead go to the satanistic masses with your gay pals!\n\n3 - First and last warning, you fucking gay - I won't appreciate if any more nazi shwain would write in my page! I don't wish to talk to you anymore!\n\nBeware of the Dark Side!"</span>
-<span class="co">#&gt; [3] "FUCK YOUR FILTHY MOTHER IN THE ASS, DRY!"</span></code></pre></div>
-</div>
-<div id="identity_hate" class="section level2">
-<h2 class="hasAnchor">
-<a href="#identity_hate" class="anchor"></a>identity_hate</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(identity_hate <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "You are gay or antisemmitian? \n\nArchangel WHite Tiger\n\nMeow! Greetingshhh!\n\nUh, there are two ways, why you do erased my comment about WW2, that holocaust was brutally slaying of Jews and not gays/Gypsys/Slavs/anyone...\n\n1 - If you are anti-semitian, than shave your head bald and go to the skinhead meetings!\n\n2 - If you doubt words of the Bible, that homosexuality is a deadly sin, make a pentagram tatoo on your forehead go to the satanistic masses with your gay pals!\n\n3 - First and last warning, you fucking gay - I won't appreciate if any more nazi shwain would write in my page! I don't wish to talk to you anymore!\n\nBeware of the Dark Side!"</span>
-<span class="co">#&gt; [2] "A pair of jew-hating weiner nazi schmucks."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </span>
-<span class="co">#&gt; [3] "I think that your a Fagget get a oife and burn in Hell I hate you 'm sorry we cant have any more sex i'm running out of conndoms"</span></code></pre></div>
-</div>
-<div id="non-toxic-content" class="section level2">
-<h2 class="hasAnchor">
-<a href="#non-toxic-content" class="anchor"></a>Non-Toxic Content</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(
-    toxic <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,
-    severe_toxic <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,
-    obscene <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,
-    threat <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, 
-    insult <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,
-    identity_hate <span class="op">==</span><span class="st"> </span><span class="dv">0</span>
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(comment_text) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>()
-<span class="co">#&gt; [1] "Explanation\nWhy the edits made under my username Hardcore Metallica Fan were reverted? They weren't vandalisms, just closure on some GAs after I voted at New York Dolls FAC. And please don't remove the template from the talk page since I'm retired now.89.205.38.27"</span>
-<span class="co">#&gt; [2] "D'aww! He matches this background colour I'm seemingly stuck with. Thanks.  (talk) 21:51, January 11, 2016 (UTC)"                                                                                                                                                         </span>
-<span class="co">#&gt; [3] "Hey man, I'm really not trying to edit war. It's just that this guy is constantly removing relevant information and talking to me through edits instead of my talk page. He seems to care more about the formatting than the actual info."</span></code></pre></div>
-</div>
-<div id="overview-of-sample" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview-of-sample" class="anchor"></a>Overview of sample</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(<span class="kw">theme_light</span>())
-train <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n_insults =</span> toxic <span class="op">+</span><span class="st"> </span>severe_toxic <span class="op">+</span><span class="st"> </span>obscene <span class="op">+</span><span class="st"> </span>threat <span class="op">+</span><span class="st"> </span>insult <span class="op">+</span><span class="st"> </span>identity_hate) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(n_insults) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">tally</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> n_insults, <span class="dt">y =</span> n)) <span class="op">+</span><span class="st"> </span>
+<a href="#understanding-the-model" class="anchor"></a>Understanding the model</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the model</span>
+model &lt;-<span class="st"> </span><span class="kw">xgb.load</span>(<span class="kw">system.file</span>(<span class="st">"xgboost_model.buffer"</span>, <span class="dt">package =</span> <span class="st">"trollR"</span>))
+df &lt;-<span class="st"> </span><span class="kw">xgb.importance</span>(mdl_data<span class="op">$</span>model_matrix <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colnames</span>(), model) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_data_frame</span>()
+
+vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"length"</span>, <span class="st">"ncap"</span>, <span class="st">"ncap_len"</span>, <span class="st">"nsen"</span>, <span class="st">"nexcl"</span>, <span class="st">"nquest"</span>, <span class="st">"npunct"</span>, 
+          <span class="st">"nword"</span>, <span class="st">"nsymb"</span>, <span class="st">"nsmile"</span>, <span class="st">"nslur"</span>)
+df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Gain) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">20</span>, Gain) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Feature =</span> <span class="kw">reorder</span>(Feature, Gain),
+         <span class="dt">Vartype =</span> Feature <span class="op">%in%</span><span class="st"> </span>vars) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Feature, <span class="dt">y =</span> Gain, <span class="dt">fill =</span> Vartype)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> n)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"Number of Insults per Comment"</span>, <span class="dt">y =</span> <span class="st">"Count"</span>)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
-</div>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Feature Importance in the XGBoost Model"</span>, <span class="dt">x =</span> <span class="st">""</span>, <span class="dt">title =</span> <span class="st">""</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">face =</span> <span class="st">"bold"</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>, <span class="dt">guide =</span> F)</code></pre></div>
 </div>
   </div>
 
@@ -241,11 +199,12 @@ train <span class="op">%&gt;%</span><span class="st"> </span>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Lala hallo <br><small class="roles"> Author, maintainer </small>  </li>
-<li>David dachdecker <br><small class="roles"> Author </small>  </li>
-<li>Ben Aaron <br><small class="roles"> Author </small>  </li>
-<li>YO mama <br><small class="roles"> Author </small>  </li>
-<li>LS E <br><small class="roles"> Author </small>  </li>
+<li>Marcel Schliebs <br><small class="roles"> Author, maintainer </small>  </li>
+<li>David Zimmermann <br><small class="roles"> Author </small>  </li>
+<li>Ben Thies <br><small class="roles"> Author </small>  </li>
+<li>Divakar Kumar <br><small class="roles"> Author </small>  </li>
+<li>Preet Parikh <br><small class="roles"> Author </small>  </li>
+<li>Mengxi Wang <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -255,7 +214,7 @@ train <span class="op">%&gt;%</span><span class="st"> </span>
 
 
       <footer><div class="copyright">
-  <p>Developed by Lala hallo, David dachdecker, Ben Aaron, YO mama, LS E.</p>
+  <p>Developed by Marcel Schliebs, David Zimmermann, Ben Thies, Divakar Kumar, Preet Parikh, Mengxi Wang.</p>
 </div>
 
 <div class="pkgdown">
