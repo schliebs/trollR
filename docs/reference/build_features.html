@@ -69,20 +69,8 @@
      
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Get Started
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/trollR.html">Test</a>
-    </li>
-    <li>
-      <a href="../articles/vignette2.html">Test2</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/trollR.html">Get Started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -167,7 +155,7 @@ as mdl</p>
 
 <span class='fu'>build_features</span>(<span class='no'>text</span>)</div><div class='output co'>#&gt; Calculating Features...
 #&gt; Create DTM...
-#&gt; Finished in 5.3 seconds</div><div class='output co'>#&gt; $model_matrix
+#&gt; Finished in 3.21 seconds</div><div class='output co'>#&gt; $model_matrix
 #&gt; 3 x 21 sparse Matrix of class "dgCMatrix"</div><div class='output co'>#&gt; <span class='message'>   [[ suppressing 21 column names ‘length’, ‘ncap’, ‘ncap_len’ ... ]]</span></div><div class='output co'>#&gt;                                                        
 #&gt; 1 45  1 0.02222222 . . .  . 8 . . 1 1 1 . . . . . . . .
 #&gt; 2 41 19 0.46341463 . . .  . 9 . . . . . 1 1 1 . . . . .
@@ -186,22 +174,24 @@ as mdl</p>
 #&gt;     corpus_insert(vocab_corpus_ptr, iterator, grow_dtm, skip_grams_window_context, 
 #&gt;         window_size, weights)
 #&gt; }
-#&gt; &lt;environment: 0x0000000005354118&gt;
+#&gt; &lt;environment: 0x0000000020dcb540&gt;
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>dtm</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"capit"</span>, <span class='st'>"someth"</span>, <span class='st'>"punctuat"</span>, <span class='st'>"use"</span>, <span class='st'>"mani"</span>, <span class='st'>"second"</span>, <span class='st'>"last"</span>,
    <span class='st'>"describ"</span>, <span class='st'>"like"</span>, <span class='st'>"first"</span>, <span class='st'>"realli"</span>)
 <span class='fu'>build_features</span>(<span class='no'>text</span>, <span class='kw'>dtm</span> <span class='kw'>=</span> <span class='no'>dtm</span>)</div><div class='output co'>#&gt; <span class='error'>Error in build_features(text, dtm = dtm): unused argument (dtm = dtm)</span></div><div class='input'>
 <span class='co'># a second example</span>
-<span class='co'>#' train &lt;- c("Banking is finance", "flowers are not houses", "finance is power", "houses are build")</span>
+<span class='no'>train</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"Banking is finance"</span>, <span class='st'>"flowers are not houses"</span>, <span class='st'>"finance is power"</span>, <span class='st'>"houses are build"</span>)
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"finance is greed"</span>, <span class='st'>"flowers belong in the garbage"</span>, <span class='st'>"houses are build"</span>)
 
 <span class='no'>a1</span> <span class='kw'>&lt;-</span> <span class='fu'>build_features</span>(<span class='no'>test</span>)</div><div class='output co'>#&gt; Calculating Features...
 #&gt; Create DTM...
-#&gt; Finished in 3.43 seconds</div><div class='input'><span class='no'>a12</span> <span class='kw'>&lt;-</span> <span class='fu'>build_features</span>(<span class='no'>test</span>, <span class='kw'>mdl</span> <span class='kw'>=</span> <span class='no'>a1</span>$<span class='no'>mdl</span>)</div><div class='output co'>#&gt; Calculating Features...
+#&gt; Finished in 3.74 seconds</div><div class='input'><span class='no'>a12</span> <span class='kw'>&lt;-</span> <span class='fu'>build_features</span>(<span class='no'>test</span>, <span class='kw'>mdl</span> <span class='kw'>=</span> <span class='no'>a1</span>$<span class='no'>mdl</span>)</div><div class='output co'>#&gt; Calculating Features...
 #&gt; Create DTM...
-#&gt; Finished in 2.99 seconds</div><div class='input'>
-<span class='no'>a2</span> <span class='kw'>&lt;-</span> <span class='fu'>build_features</span>(<span class='no'>train</span>, <span class='kw'>mdl</span> <span class='kw'>=</span> <span class='no'>a1</span>$<span class='no'>mdl</span>)</div><div class='output co'>#&gt; Calculating Features...</div><div class='output co'>#&gt; <span class='error'>Error in eval_tidy(xs[[i]], unique_output): object 'train' not found</span></div><div class='input'><span class='no'>a2</span>$<span class='no'>res</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'a2' not found</span></div></pre>
+#&gt; Finished in 3.25 seconds</div><div class='input'>
+<span class='no'>a2</span> <span class='kw'>&lt;-</span> <span class='fu'>build_features</span>(<span class='no'>train</span>, <span class='kw'>mdl</span> <span class='kw'>=</span> <span class='no'>a1</span>$<span class='no'>mdl</span>)</div><div class='output co'>#&gt; Calculating Features...
+#&gt; Create DTM...
+#&gt; Finished in 3.76 seconds</div><div class='input'><span class='no'>a2</span>$<span class='no'>res</span></div><div class='output co'>#&gt; NULL</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
