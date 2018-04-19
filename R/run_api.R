@@ -18,7 +18,7 @@ run_api <- function(port = 8000) {
   message("trollR Server API up and running!")
   message(sprintf("Running on localhost:%s/trollR (or http://127.0.0.1:%s/trollR)", port, port))
   message(sprintf("To use the API use: localhost:%s/trollR?text=hello world", port))
-  message("...")
+  message("End the Server API by pressing (ESC)...")
   suppressMessages(r$run(port = port))
 
   return(invisible(NULL))

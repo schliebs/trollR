@@ -13,18 +13,17 @@ Authors@R: c(
 Description: What the package does (one paragraph).
 Depends: 
     R (>= 3.4.3),
-    tidyverse,
-    shiny
+    shiny,
+    tidyverse
 Imports:
     doParallel,
-    plumber,
-    xgboost,
-    text2vec,
-    tm,
     Matrix,
-    tokenizers,
+    plumber,
     shinydashboard,
-    tokenizers
+    text2vec,
+    tokenizers,
+    tm,
+    xgboost
 License: MIT
 Encoding: UTF-8
 LazyData: true
