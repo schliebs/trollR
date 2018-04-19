@@ -38,10 +38,6 @@ text <- c(
 
 build_features(text)
 
-dtm <- c("capit", "someth", "punctuat", "use", "mani", "second", "last",
-   "describ", "like", "first", "realli")
-build_features(text, dtm = dtm)
-
 # a second example
 train <- c("Banking is finance", "flowers are not houses", "finance is power", "houses are build")
 test <- c("finance is greed", "flowers belong in the garbage", "houses are build")
@@ -50,5 +46,5 @@ a1 <- build_features(test)
 a12 <- build_features(test, mdl = a1$mdl)
 
 a2 <- build_features(train, mdl = a1$mdl)
-a2$res
+a2$model_matrix \%>\% as.matrix()
 }
