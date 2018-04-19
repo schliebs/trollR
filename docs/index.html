@@ -118,17 +118,17 @@ text &lt;-<span class="st"> </span><span class="kw">c</span>(
 <span class="co"># and find how likely it is to be trolling?</span>
 <span class="kw">data_frame</span>(<span class="dt">text =</span> text, <span class="dt">troll =</span> <span class="kw"><a href="reference/predict_troll.html">predict_troll</a></span>(text)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>troll)
 <span class="co">#&gt; # A tibble: 9 x 2</span>
-<span class="co">#&gt;   text                                                           troll</span>
-<span class="co">#&gt;   &lt;chr&gt;                                                          &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bloody hell, i forgot my purse at the pub yesterday          0.514  </span>
-<span class="co">#&gt; 2 COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK                 0.460  </span>
-<span class="co">#&gt; 3 YOU SHOULD DIE                                               0.286  </span>
-<span class="co">#&gt; 4 YOU SHOULD DIE!!!!                                           0.251  </span>
-<span class="co">#&gt; 5 you should die!!!!                                           0.138  </span>
-<span class="co">#&gt; 6 you should die                                               0.126  </span>
-<span class="co">#&gt; 7 I would like to point out that your comment was substandard! 0.0209 </span>
-<span class="co">#&gt; 8 Go rot in hell                                               0.0120 </span>
-<span class="co">#&gt; 9 I can also write something non-toxic -- really               0.00470</span></code></pre></div>
+<span class="co">#&gt;   text                                                          troll</span>
+<span class="co">#&gt;   &lt;chr&gt;                                                         &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 bloody hell, i forgot my purse at the pub yesterday          0.994 </span>
+<span class="co">#&gt; 2 Go rot in hell                                               0.985 </span>
+<span class="co">#&gt; 3 COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK                 0.655 </span>
+<span class="co">#&gt; 4 YOU SHOULD DIE!!!!                                           0.484 </span>
+<span class="co">#&gt; 5 YOU SHOULD DIE                                               0.450 </span>
+<span class="co">#&gt; 6 you should die!!!!                                           0.284 </span>
+<span class="co">#&gt; 7 you should die                                               0.230 </span>
+<span class="co">#&gt; 8 I would like to point out that your comment was substandard! 0.175 </span>
+<span class="co">#&gt; 9 I can also write something non-toxic -- really               0.0325</span></code></pre></div>
 <div id="thats-all" class="section level2">
 <h2 class="hasAnchor">
 <a href="#thats-all" class="anchor"></a>Thats all?</h2>

@@ -1,3 +1,4 @@
+library(shinydashboard)
 
 shuffleButton <- function(id, label = "button1"){
   ns <- NS(id)
