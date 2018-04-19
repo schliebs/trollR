@@ -78,6 +78,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#trollr---online-troll-detection-using-r" class="anchor"></a>trollR - Online Troll Detection using R</h1></div>
 <p>LSE Hackathon Challenge: Detecting Online Trolling Behaviour</p>
+<p>Click <a href="https://schliebs.shinyapps.io/trollR/">here</a> to try out our shiny-app.</p>
 <p>Data source: <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/" class="uri">https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/</a></p>
 <p>Data description</p>
 <p>A large number of Wikipedia comments which have been labeled by human raters for toxic behavior. The types of toxicity are:</p>
@@ -100,7 +101,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="kw">library</span>(trollR)
 <span class="kw">library</span>(xgboost)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/predict_troll.html">predict_troll</a></span>(<span class="st">"Hello World - this is an example of trollR - Identifying trolling comments using R"</span>)
-<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; [1] 0.0722369</span>
 
 <span class="co"># take some text</span>
 text &lt;-<span class="st"> </span><span class="kw">c</span>(
@@ -120,15 +121,15 @@ text &lt;-<span class="st"> </span><span class="kw">c</span>(
 <span class="co">#&gt; # A tibble: 9 x 2</span>
 <span class="co">#&gt;   text                                                          troll</span>
 <span class="co">#&gt;   &lt;chr&gt;                                                         &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 bloody hell, i forgot my purse at the pub yesterday          0.994 </span>
-<span class="co">#&gt; 2 Go rot in hell                                               0.985 </span>
-<span class="co">#&gt; 3 COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK                 0.655 </span>
-<span class="co">#&gt; 4 YOU SHOULD DIE!!!!                                           0.484 </span>
-<span class="co">#&gt; 5 YOU SHOULD DIE                                               0.450 </span>
-<span class="co">#&gt; 6 you should die!!!!                                           0.284 </span>
-<span class="co">#&gt; 7 you should die                                               0.230 </span>
-<span class="co">#&gt; 8 I would like to point out that your comment was substandard! 0.175 </span>
-<span class="co">#&gt; 9 I can also write something non-toxic -- really               0.0325</span></code></pre></div>
+<span class="co">#&gt; 1 COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK                 0.972 </span>
+<span class="co">#&gt; 2 bloody hell, i forgot my purse at the pub yesterday          0.958 </span>
+<span class="co">#&gt; 3 Go rot in hell                                               0.796 </span>
+<span class="co">#&gt; 4 you should die!!!!                                           0.729 </span>
+<span class="co">#&gt; 5 YOU SHOULD DIE!!!!                                           0.714 </span>
+<span class="co">#&gt; 6 YOU SHOULD DIE                                               0.667 </span>
+<span class="co">#&gt; 7 you should die                                               0.543 </span>
+<span class="co">#&gt; 8 I would like to point out that your comment was substandard! 0.0739</span>
+<span class="co">#&gt; 9 I can also write something non-toxic -- really               0.0281</span></code></pre></div>
 <div id="thats-all" class="section level2">
 <h2 class="hasAnchor">
 <a href="#thats-all" class="anchor"></a>Thats all?</h2>
@@ -151,7 +152,9 @@ text &lt;-<span class="st"> </span><span class="kw">c</span>(
 <h1 class="hasAnchor">
 <a href="#understanding-the-model" class="anchor"></a>Understanding the model</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the model</span>
-model &lt;-<span class="st"> </span><span class="kw">xgb.load</span>(<span class="kw">system.file</span>(<span class="st">"xgboost_model.buffer"</span>, <span class="dt">package =</span> <span class="st">"trollR"</span>))
+<span class="co">#model &lt;- xgb.load(system.file("xgboost_model.buffer", package = "trollR"))</span>
+model &lt;-<span class="st"> </span><span class="kw">xgb.load</span>(<span class="st">"inst/xgboost_model.buffer"</span>)
+
 df &lt;-<span class="st"> </span><span class="kw">xgb.importance</span>(mdl_data<span class="op">$</span>model_matrix <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">colnames</span>(), model) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_data_frame</span>()
 
 vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"length"</span>, <span class="st">"ncap"</span>, <span class="st">"ncap_len"</span>, <span class="st">"nsen"</span>, <span class="st">"nexcl"</span>, <span class="st">"nquest"</span>, <span class="st">"npunct"</span>, 
@@ -167,6 +170,7 @@ df <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Feature Importance in the XGBoost Model"</span>, <span class="dt">x =</span> <span class="st">""</span>, <span class="dt">title =</span> <span class="st">""</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">face =</span> <span class="st">"bold"</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>, <span class="dt">guide =</span> F)</code></pre></div>
+<p><img src="reference/figures/README-plot1-1.png" width="100%"></p>
 </div>
   </div>
 

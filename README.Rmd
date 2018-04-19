@@ -21,6 +21,9 @@ theme_set(theme_light())
 
 LSE Hackathon Challenge: Detecting Online Trolling Behaviour 
 
+Click [here](https://schliebs.shinyapps.io/trollR/) to try out our shiny-app.
+
+
 Data source: https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/
 
 Data description
@@ -89,7 +92,9 @@ run_shiny()
 
 ```{r plot1,eval = TRUE}
 # load the model
-model <- xgb.load(system.file("xgboost_model.buffer", package = "trollR"))
+#model <- xgb.load(system.file("xgboost_model.buffer", package = "trollR"))
+model <- xgb.load("inst/xgboost_model.buffer")
+
 df <- xgb.importance(mdl_data$model_matrix %>% colnames(), model) %>% as_data_frame()
 
 vars <- c("length", "ncap", "ncap_len", "nsen", "nexcl", "nquest", "npunct", 

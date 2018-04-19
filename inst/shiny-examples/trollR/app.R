@@ -1,4 +1,16 @@
 library(shinydashboard)
+library(tidyverse)
+#devtools::install_github("schliebs/trollR")
+#
+library(trollR)
+library(doParallel)
+library(Matrix)
+library(plumber)
+library(shinydashboard)
+library(text2vec)
+library(tokenizers)
+library(tm)
+library(xgboost)
 
 shuffleButton <- function(id, label = "button1"){
   ns <- NS(id)

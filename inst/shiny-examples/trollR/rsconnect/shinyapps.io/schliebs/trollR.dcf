@@ -1,0 +1,12 @@
+name: trollR
+title: trollR
+username:
+account: schliebs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 326140
+bundleId: 1327839
+url: https://schliebs.shinyapps.io/trollR/
+when: 1524156855.20144
+asMultiple: FALSE
+asStatic: FALSE
